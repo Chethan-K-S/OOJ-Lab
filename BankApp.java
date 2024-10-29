@@ -55,7 +55,7 @@ class SavAcct extends Account {
 class Cheque {
     int chequeNumber;
     double amount;
-    String status; // "Issued", "Stopped", "Cleared"
+    String status;
     Date issueDate;
     Date postDate;
 
@@ -71,7 +71,8 @@ class Cheque {
 class CurAcct extends Account {
     final double minimumBalance = 1000.0;
     final double penalty = 50.0;
-    ArrayList<Cheque> chequeHistory = new ArrayList<>();
+    Cheque[] chequeHistory = new Cheque[100];
+    int chequeCount = 0;
     int nextChequeNumber = 1001;
 
     CurAcct(String customerName, int accountNumber, double balance) {
@@ -83,9 +84,14 @@ class CurAcct extends Account {
     }
 
     void issueCheque(double amount, Date postDate) {
+        if (chequeCount >= chequeHistory.length) {
+            System.out.println("Cheque book limit reached. No more cheques can be issued.");
+            return;
+        }
+
         if (balance >= amount) {
             Cheque cheque = new Cheque(nextChequeNumber++, amount, new Date(), postDate);
-            chequeHistory.add(cheque);
+            chequeHistory[chequeCount++] = cheque;
             balance -= amount;
             System.out.println("Cheque #" + cheque.chequeNumber + " issued for " + amount + ". Updated balance: " + balance);
             if (balance < minimumBalance) {
@@ -98,11 +104,11 @@ class CurAcct extends Account {
     }
 
     void stopCheque(int chequeNumber) {
-        for (Cheque cheque : chequeHistory) {
-            if (cheque.chequeNumber == chequeNumber && cheque.status.equals("Issued")) {
-                cheque.status = "Stopped";
-                balance += cheque.amount;
-                System.out.println("Cheque #" + chequeNumber + " stopped. Amount " + cheque.amount + " refunded. Updated balance: " + balance);
+        for (int i = 0; i < chequeCount; i++) {
+            if (chequeHistory[i].chequeNumber == chequeNumber && chequeHistory[i].status.equals("Issued")) {
+                chequeHistory[i].status = "Stopped";
+                balance += chequeHistory[i].amount;
+                System.out.println("Cheque #" + chequeNumber + " stopped. Amount " + chequeHistory[i].amount + " refunded. Updated balance: " + balance);
                 return;
             }
         }
@@ -111,7 +117,8 @@ class CurAcct extends Account {
 
     void displayChequeHistory() {
         System.out.println("Cheque History:");
-        for (Cheque cheque : chequeHistory) {
+        for (int i = 0; i < chequeCount; i++) {
+            Cheque cheque = chequeHistory[i];
             System.out.println("Cheque #" + cheque.chequeNumber + " | Amount: " + cheque.amount + " | Status: " + cheque.status + 
                                " | Issue Date: " + cheque.issueDate + " | Post Date: " + cheque.postDate);
         }
