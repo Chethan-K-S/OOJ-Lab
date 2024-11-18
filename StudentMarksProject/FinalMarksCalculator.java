@@ -20,7 +20,7 @@ public class FinalMarksCalculator {
 
             System.out.print("Enter USN for Student " + (i + 1) + ": ");
             students[i].usn = sc.next();
-            sc.nextLine();  // Consume the newline left by next()
+            sc.nextLine(); 
 
             System.out.print("Enter Name for Student " + (i + 1) + ": ");
             students[i].name = sc.nextLine();
