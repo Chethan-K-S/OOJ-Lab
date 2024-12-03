@@ -10,4 +10,6 @@ lab  #6  --  Packages
 lab #7 -- Interface       
 ![image](https://github.com/user-attachments/assets/b359bf24-9630-459c-877d-4ade8316ea10)            
 lab #8 -- exceptions     
-![image](https://github.com/user-attachments/assets/bbbe3495-7eb7-4165-8d9e-3c1874f1511e)
+![image](https://github.com/user-attachments/assets/bbbe3495-7eb7-4165-8d9e-3c1874f1511e)              
+lab #9 -- Multithread                
+![image](https://github.com/user-attachments/assets/10190d79-5629-4ec2-a3d0-5f22af91bfa1)
